@@ -1,0 +1,22 @@
+#! /bin/sh -e
+
+python weekly_linux_build_duration_mean.py
+python weekly_linux_build_overhead_mean.py
+python weekly_linux_build_duration_median.py
+python weekly_linux_build_overhead_median.py
+
+python weekly_linux_install_duration_mean.py
+python weekly_linux_install_overhead_mean.py
+python weekly_linux_install_duration_median.py
+python weekly_linux_install_overhead_median.py
+
+python weekly_windows_build_duration_mean.py
+python weekly_windows_build_overhead_mean.py
+python weekly_windows_build_duration_median.py
+python weekly_windows_build_overhead_median.py
+
+python weekly_windows_install_duration_mean.py
+python weekly_windows_install_overhead_mean.py
+python weekly_windows_install_duration_median.py
+python weekly_windows_install_overhead_median.py
+

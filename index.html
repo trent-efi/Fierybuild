@@ -2,7 +2,14 @@
 <html lang="en-US">
 <head>
     <title>Fiery Install/Build Graph</title>
+    <script class="include" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
     <link class="include" rel="stylesheet" type="text/css" href="dist/jquery.jqplot.min.css" />
+    <script type="text/javascript" src="dist/jquery.jqplot.min.js"></script>
+    <script type="text/javascript" src="dist/plugins/jqplot.cursor.min.js"></script>
+    <script type="text/javascript" src="dist/plugins/jqplot.highlighter.min.js"></script>
+    <script type="text/javascript" src="dist/jquery.jqplot.js"></script>
+    <script type="text/javascript" src="dist/plugins/jqplot.json2.js"></script>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -10,8 +17,6 @@
 
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
-    <!--<script class="include" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
-    <script type="text/javascript" src="dist/jquery.jqplot.min.js"></script>
     <script>
     $(function() {
         $( "#datepicker0" ).datepicker();
@@ -44,6 +49,11 @@
             <div class="mean_median" id="duration_median" onclick="select_mean_median('duration_median')">Duration Median</div>
         </div> <!-- end mean_median_wrapper -->
 
+        <div id="checkbox_wrapper">
+	    <div><b>WEEKLY REPORTING VIEW:</b></div>
+	    <div><br><input id="weekly_report_checkbox" type="checkbox" name="weekly_report" onclick="select_weekly_report()" >Enable Weekly Reporting<br><br></div>
+	</div>
+
         <div id="calendar_wrapper">
             <div><b>SELECT A DATE RANGE:</b></div>
 	    <div><p>Start Date: <input type="text" id="datepicker0" value=""></p></div>
@@ -63,13 +73,18 @@
     </div><!-- end box_wrapper -->
 
 
+	<script class="include" type="text/javascript" src="/dist/jquery.jqplot.js"></script>
 
+
+        <script class="include" type="text/javascript" src="/dist/plugins/jqplot.cursor.min.js"></script>
+        <script class="include" type="text/javascript" src="/dist/plugins/jqplot.highlighter.min.js"></script>
 
 
     <script class="code" type="text/javascript">
 
     BUILD_INSTALL = undefined;
     MEAN_MEDIAN = undefined;
+    WEEKLY_REPORT = '';
 
     DATE_ARR = [];
     FREMONT = [];
@@ -95,9 +110,11 @@
 	}
 
         document.getElementById('datepicker1').value=month+"/"+day+"/"+year;
+        //document.getElementById('datepicker1').value="06/14/2016";
+
 
 	var yesterday = new Date(today);
-        yesterday.setDate(today.getDate() - 1);        
+        yesterday.setDate(today.getDate() - 14);        
 
         year = yesterday.getFullYear();
 	month = yesterday.getMonth();
@@ -115,11 +132,11 @@
         console.log(day);
 
         document.getElementById('datepicker0').value=month+"/"+day+"/"+year;
+        //document.getElementById('datepicker0').value="06/01/2016";
 
         //console.log(month)
         $('#windows_build').click(); 
         $('#overhead_mean').click(); 
-
         $('#graph_button').click();
         
     });
@@ -158,13 +175,14 @@
 	} else {
 
             //alert(BUILD_INSTALL);
-	    var csv = BUILD_INSTALL+"_"+MEAN_MEDIAN+".csv";
+	    var csv = WEEKLY_REPORT+BUILD_INSTALL+"_"+MEAN_MEDIAN+".csv";
             $.ajax({
                 url: 'controller.php',
                 method: 'POST',
 	        data:  {'function': 'read_csv', 'csv': csv},
 	        success: function(str){
 		    arr = JSON.parse(str);
+		    console.log(str);
 		    //console.log( arr[0][1] )
 
 		    start = start.replace("/", "");
@@ -185,9 +203,8 @@
 
 
                     var start_index = find_index_of(start, arr[0]);
-		    //console.log("index: "+start_index+" arr_value: "+arr[0][start_index]);
 		    var end_index = find_index_of(end, arr[0]);
-
+                    
                     var date_arr = [];
                     var fremont = [];
 		    var idc = [];
@@ -210,16 +227,58 @@
                     VC_FREMONT = vc_fremont;
 		    VC_IDC = vc_idc;
 
-                    var options = {
-		                      title: BUILD_INSTALL+" "+MEAN_MEDIAN,
-	                              legend: {
-	                                  labels: ["Fremont", "IDC", "VC_Fremont", "VC_IDC"],
-                                          show: true,
-                                          rendererOptions: {
-                                              fontSize: '10pt'
-                                          }
-	                              }
-				  };
+	var options = {};        
+
+	options = {
+	     title: WEEKLY_REPORT+" "+BUILD_INSTALL+" "+MEAN_MEDIAN,
+            highlighter: {
+                show: false,
+                sizeAdjust: 14,
+                tooltipLocation: 'n',
+                tooltipAxes: 'n',
+                formatString:'#TRENTLabel# - %s',
+                useAxesFormatters: false
+            },
+	    legend: {
+	        labels: ["Fremont", "IDC", "VC_Fremont", "VC_IDC"],
+                show: true,
+                rendererOptions: {
+                    fontSize: '10pt'
+                }
+	    },
+            seriesDefaults: {
+                renderer: $.jqplot.FunnelRenderer
+            },
+	    cursor: {
+                zoom:true, 
+                looseZoom: true, 
+                showTooltip:false, 
+                followMouse: true, 
+                showTooltipOutsideZoom: false, 
+                constrainOutsideZoom: true 
+            },
+            axes: {
+                xaxis: {
+		    label:'Year:Month:Day',
+		    tickInterval: 1,
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                    pad: 1.1	    
+                },
+                yaxis: {
+		    label:'Time (minutes)',
+		    pad: 1.2,
+		    renderer: $.jqplot.CategoryAxisRenderer
+		}
+            },
+	    grid: {
+                backgroundColor: '#EBEBEB',
+                borderWidth: 0,
+                gridLineColor: 'grey',
+                gridLineWidth: 1,
+                borderColor: 'black'
+            },
+	    series: [  ]
+	};
 
                     var plot1 = $.jqplot ('chart1', [FREMONT, IDC, VC_FREMONT, VC_IDC], options);
                     plot1.replot( { resetAxes: true } );
@@ -230,13 +289,29 @@
     }
 
     function find_index_of(date_str, arr){
-        var i = 0;
-        for (i = 0; i < arr.length; i++){
-	    if (date_str == arr[i]){
-	        break;
+        var i = 1;
+        if(WEEKLY_REPORT == ''){
+            for (i = 1; i < arr.length; i++){
+	        if (date_str == arr[i]){
+	            break;
+	        }
 	    }
+	} else {
+            for (i = 1; i < arr.length; i++){
+	        if (arr[i] >= date_str){
+	            break;
+	        }
+	    }	
 	}
 	return i;
+    }
+
+    function select_weekly_report(){
+        if(document.getElementById('weekly_report_checkbox').checked) {
+            WEEKLY_REPORT = 'weekly_';
+        } else {
+            WEEKLY_REPORT = '';
+        }
     }
 
     function select_mean_median(row){
@@ -280,6 +355,10 @@
 }
 #right_box{
   float: left;
+}
+#checkbox_wrapper{
+    border: 1px solid black;
+    width: 100%;
 }
 #build_install_wrapper {
     border: 1px solid black;

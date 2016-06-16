@@ -13,7 +13,22 @@ function read_csv($csv){
     
     //$data = fgetcsv($file);
     while( ($line = fgetcsv($file)) !== false) {
-        $data[] = $line;
+        //$line = str_replace('','',$line);
+	$temp = array();
+        $first = 0;
+        $max = count($line);
+	for($i = 0; $i < $max; $i++){
+	    if($first == 0){
+	        $first = 1;
+	        $temp[] = $line[$i];
+	    } else {
+	        $temp[] = intval($line[$i]);	        
+	    }
+	    //echo "";
+	}
+
+        //$data[] = $line;
+        $data[] = $temp;
     }
 
     fclose($file);
