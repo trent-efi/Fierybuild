@@ -155,7 +155,7 @@ EXIT CODES:
 
 def Collect_Data(obj):
     try:
-        cmd = 'python calculus_scraper.py --region '+obj['region']+' --date '+obj['start_date']
+        cmd = 'python /var/www/html/fierybuild/calculus_scraper.py --region '+obj['region']+' --date '+obj['start_date']
         result = os.popen(cmd).read()
         if "ERROR" in result:
 	    raise Exception("ERROR")

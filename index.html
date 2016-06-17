@@ -33,25 +33,33 @@
     <div id="box_wrapper">
     <div id="left_box">
 
-        <div id="build_install_wrapper">
+        <div id="data_set_wrapper">
+	    <div><b>SELECT DATA SET:</b></div>
+	    <div class="data_set" id="windows_build_duration_mean" onclick="select_data_set('windows_build','duration_mean')">Windows Build Duration Mean</div>
+	    <div class="data_set" id="windows_build_duration_median" onclick="select_data_set('windows_build','duration_median')">Windows Build Duration Median</div>
+	    <div class="data_set" id="linux_build_duration_mean" onclick="select_data_set('linux_build','duration_mean')">Linux Build Duration Mean</div>
+	    <div class="data_set" id="linux_build_duration_median" onclick="select_data_set('linux_build','duration_median')">Linux Build Duration Median</div>
+	</div>
+
+        <!--<div id="build_install_wrapper">
             <div><b>SELECT A BUILD/INSTALL:</b></div>
             <div class="build_install" id="windows_build" onclick="select_build_install('windows_build')">Windows Build</div>
             <div class="build_install" id="linux_build" onclick="select_build_install('linux_build')">Linux Build</div>
             <div class="build_install" id="windows_install" onclick="select_build_install('windows_install')">Windows Install</div>
             <div class="build_install" id="linux_install" onclick="select_build_install('linux_install')">Linux Install</div>
-        </div><!-- end build_install_wrapper -->
+        </div>--><!-- end build_install_wrapper -->
 
-        <div id="mean_median_wrapper">
+        <!--<div id="mean_median_wrapper">
             <div><b>SELECT TYPE OF DATA:</b></div>
             <div class="mean_median" id="overhead_mean" onclick="select_mean_median('overhead_mean')">Overhead Mean</div>
             <div class="mean_median" id="overhead_median" onclick="select_mean_median('overhead_median')">Overhead Median</div>
             <div class="mean_median" id="duration_mean" onclick="select_mean_median('duration_mean')">Duration Mean</div>
             <div class="mean_median" id="duration_median" onclick="select_mean_median('duration_median')">Duration Median</div>
-        </div> <!-- end mean_median_wrapper -->
+        </div>--> <!-- end mean_median_wrapper -->
 
         <div id="checkbox_wrapper">
 	    <div><b>WEEKLY REPORTING VIEW:</b></div>
-	    <div><br><input id="weekly_report_checkbox" type="checkbox" name="weekly_report" onclick="select_weekly_report()" >Enable Weekly Reporting<br><br></div>
+	    <div><br><input id="weekly_report_checkbox" type="checkbox" name="weekly_report" onclick="select_weekly_report()" >Enable Weekly Reporting View<br><br></div>
 	</div>
 
         <div id="calendar_wrapper">
@@ -135,8 +143,9 @@
         //document.getElementById('datepicker0').value="06/01/2016";
 
         //console.log(month)
-        $('#windows_build').click(); 
-        $('#overhead_mean').click(); 
+        //$('#windows_build').click(); 
+        //$('#overhead_mean').click();
+	$('#windows_build_duration_mean').click();
         $('#graph_button').click();
         
     });
@@ -148,6 +157,7 @@
         var day = '';
         var month = '';
         var year = '';
+
 
         var temp_start = start.replace("/", "");
         temp_start = temp_start.replace("/", "");
@@ -210,15 +220,25 @@
 		    var idc = [];
 		    var vc_fremont = [];
 		    var vc_idc = [];
-
+ 
+                    i = 0;
 		    for (start_index; start_index <= end_index; start_index++){
-		        date_arr.push(arr[0][start_index]);
+		        /*date_arr.push(arr[0][start_index]);
 		        fremont.push(arr[1][start_index]);
                         idc.push(arr[2][start_index]);
 			vc_fremont.push(arr[3][start_index]);
-			vc_idc.push(arr[4][start_index]); 
+			vc_idc.push(arr[4][start_index]); */
+			date_arr[i] = arr[0][start_index];
+			fremont[i] = arr[1][start_index];
+			idc[i] = arr[2][start_index];
+                        vc_fremont[i] = arr[3][start_index];
+			vc_idc[i] = arr[4][start_index];
+			i++;
 		    }
-
+                    fremont.push(null);
+		    idc.push(null);
+		    vc_fremont.push(null);
+		    vc_idc.push(null);
                     
 
 		    DATE_ARR = date_arr;
@@ -228,6 +248,20 @@
 		    VC_IDC = vc_idc;
 
 	var options = {};        
+ 
+        //console.log(DATE_ARR.toString());
+	var temp = [];
+        //TODO: HOT FIX...
+        var index_date = [];
+	index_date.push([0,""])
+	for(i = 1; i < DATE_ARR.length; i++){
+	    index_date[i] = [i, ''+DATE_ARR[i-1] ];
+	}
+	index_date.push([i, ''+DATE_ARR[i-1] ]);
+	index_date.push([i+1, " "])
+        console.log(i);
+	console.log(index_date);
+        console.log(FREMONT);
 
 	options = {
 	     title: WEEKLY_REPORT+" "+BUILD_INSTALL+" "+MEAN_MEDIAN,
@@ -257,17 +291,25 @@
                 showTooltipOutsideZoom: false, 
                 constrainOutsideZoom: true 
             },
+	    axesDefaults: {
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                tickOptions: {
+                    angle: 30
+                }
+            },
             axes: {
                 xaxis: {
-		    label:'Year:Month:Day',
+		    label:'Year/Month/Day',
 		    tickInterval: 1,
                     renderer: $.jqplot.CategoryAxisRenderer,
-                    pad: 1.1	    
+                    pad: 1.1,
+                    ticks: index_date
                 },
                 yaxis: {
 		    label:'Time (minutes)',
 		    pad: 1.2,
-		    renderer: $.jqplot.CategoryAxisRenderer
+		    renderer: $.jqplot.LinearAxisRenderer
 		}
             },
 	    grid: {
@@ -279,8 +321,10 @@
             },
 	    series: [  ]
 	};
-
+        console.log(options);
+                    //var plot1 = $.jqplot ('chart1', [date_fremont, date_idc, date_vc_fremont, date_vc_idc], options);
                     var plot1 = $.jqplot ('chart1', [FREMONT, IDC, VC_FREMONT, VC_IDC], options);
+		    console.log(plot1);
                     plot1.replot( { resetAxes: true } );
 		}
 	    });
@@ -336,7 +380,20 @@
         var id = "#"+row;
         $(id).css({"background-color":"blue"});
         $(id).css({"color":"white"});
-    }    
+    }   
+
+    function select_data_set(row0, row1){
+        BUILD_INSTALL = row0;
+	MEAN_MEDIAN = row1;
+	
+        $('.data_set').css({"background-color":"white"});
+        $('.data_set').css({"color":"black"});
+	
+        var id = "#"+row0+"_"+row1;
+        $(id).css({"background-color":"blue"});
+        $(id).css({"color":"white"});		
+
+    }
 </script>
 
 
@@ -355,6 +412,10 @@
 }
 #right_box{
   float: left;
+}
+#data_set_wrapper{
+    border: 1px solid black;
+    width: 100%;
 }
 #checkbox_wrapper{
     border: 1px solid black;

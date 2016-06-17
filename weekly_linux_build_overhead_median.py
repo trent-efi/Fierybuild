@@ -189,7 +189,7 @@ def Main():
 		weekly_sum = 0
         #end for
 
-        myfile = open( 'csv/weekly_linux_build_overhead_median.csv', 'w')
+        myfile = open( '/var/www/html/fierybuild/csv/weekly_linux_build_overhead_median.csv', 'w')
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(obj['date'])
         wr.writerow(obj['Fremont'])

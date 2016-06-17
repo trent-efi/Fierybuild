@@ -152,7 +152,7 @@ $(document).ready(function(){
     var line2 = [['Nickle', 28], ['Aluminum', 13], ['Xenon', 54], ['Silver', 47], 
     ['Sulfer', 16], ['Silicon', 14], ['Vanadium', 23]];
 
-    var plot4 = $.jqplot('chart4', [line, line2], {
+    var options = {
         title: 'Concern vs. Occurrance',
         series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
         axes: {
@@ -193,7 +193,11 @@ $(document).ready(function(){
                 }
             }
         }
-    });
+    };
+
+    console.log(options);
+
+    var plot4 = $.jqplot('chart4', [line, line2], options);
 });
     </script>
 

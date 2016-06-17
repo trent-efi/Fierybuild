@@ -37,7 +37,7 @@ def Main():
         for index in mongo:
 	    obj['vCommander+IDC'].append(index['durations_and_overhead']['windows_build']['duration_mean']) 
 
-        myfile = open( 'csv/windows_build_duration_mean.csv', 'w')
+        myfile = open( '/var/www/html/fierybuild/csv/windows_build_duration_mean.csv', 'w')
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(obj['date'])
         wr.writerow(obj['Fremont'])

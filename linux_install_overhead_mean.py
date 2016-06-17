@@ -37,7 +37,7 @@ def Main():
         for index in mongo:
 	    obj['vCommander+IDC'].append(index['durations_and_overhead']['linux_install']['overhead_mean']) 
 
-        myfile = open( 'csv/linux_install_overhead_mean.csv', 'w')
+        myfile = open( '/var/www/html/fierybuild/csv/linux_install_overhead_mean.csv', 'w')
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(obj['date'])
         wr.writerow(obj['Fremont'])

@@ -191,7 +191,7 @@ def Main():
         #end for
 
 
-        myfile = open( 'csv/weekly_linux_install_duration_mean.csv', 'w')
+        myfile = open( '/var/www/html/fierybuild/csv/weekly_linux_install_duration_mean.csv', 'w')
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(obj['date'])
         wr.writerow(obj['Fremont'])

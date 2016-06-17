@@ -191,7 +191,7 @@ def Main():
         #end for
 
 
-        myfile = open( 'csv/weekly_linux_build_duration_mean.csv', 'w')
+        myfile = open( '/var/www/html/fierybuild/csv/weekly_linux_build_duration_mean.csv', 'w')
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(obj['date'])
         wr.writerow(obj['Fremont'])
@@ -201,8 +201,7 @@ def Main():
 
     except:
         print "ERROR"
-	log = open("error.txt", "w")
-	log.write(str(sys.exc_info()[0]))
+
 
 #end
 
