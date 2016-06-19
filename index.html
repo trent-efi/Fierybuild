@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <title>Fiery Install/Build Graph</title>
+    <title>Fiery Build Graph</title>
     <script class="include" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     
     <link class="include" rel="stylesheet" type="text/css" href="dist/jquery.jqplot.min.css" />
@@ -31,7 +31,7 @@
 
 </head>
 <body> 
-    <div><h1>Fiery Install/Build Graph</h1></div>
+    <div><h1>Fiery Build Graph</h1></div>
     <div id="box_wrapper">
     <div id="left_box">
 
@@ -103,7 +103,7 @@
     VC_IDC = [];
 
     $(document).ready(function(){
-
+        document.getElementById('weekly_report_checkbox').checked = false;
         var today = new Date();
         today.setDate(today.getDate() - 1);        
 
