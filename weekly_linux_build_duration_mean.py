@@ -36,6 +36,7 @@ def Main():
         weekly_sum = 0
 	weekly_num = []
 
+
 	mongo = collection.find({"region": "Fremont" }).sort("date_str",pymongo.ASCENDING)
         for index in mongo:
 	    date_str = index['date_str']
@@ -43,9 +44,11 @@ def Main():
 	    month = int(date_str[4:6])
 	    day = int(date_str[6:])
             foo_date = date(year, month, day)
-
-            weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_mean'])
-            weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_mean']))
+            try:
+                weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_mean'])
+                weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_mean']))
+	    except:
+	        break 
 
 	    if foo_date.weekday() == 0:
 
@@ -83,9 +86,11 @@ def Main():
 	    month = int(date_str[4:6])
 	    day = int(date_str[6:])
             foo_date = date(year, month, day)
-
-            weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_mean'])
-            weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_mean']))
+            try:
+                weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_mean'])
+                weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_mean']))
+	    except:
+	        break 
 
 	    if foo_date.weekday() == 0:
 
@@ -122,9 +127,12 @@ def Main():
 	    month = int(date_str[4:6])
 	    day = int(date_str[6:])
             foo_date = date(year, month, day)
-
-            weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_mean'])
-            weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_mean']))
+ 
+            try:
+                weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_mean'])
+                weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_mean']))
+	    except:
+	        break 
 
 	    if foo_date.weekday() == 0:
 
@@ -161,9 +169,11 @@ def Main():
 	    month = int(date_str[4:6])
 	    day = int(date_str[6:])
             foo_date = date(year, month, day)
-
-            weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_mean'])
-            weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_mean']))
+            try:
+                weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_mean'])
+                weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_mean']))
+	    except:
+	        break 
 
 	    if foo_date.weekday() == 0:
 

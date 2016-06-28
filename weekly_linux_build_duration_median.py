@@ -44,8 +44,11 @@ def Main():
 	    day = int(date_str[6:])
             foo_date = date(year, month, day)
 
-            weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_median'])
-            weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_median']))
+            try:
+                weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_median'])
+                weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_median']))
+	    except:
+	        break
 
 	    if foo_date.weekday() == 0:
 
@@ -83,8 +86,11 @@ def Main():
 	    day = int(date_str[6:])
             foo_date = date(year, month, day)
 
-            weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_median'])
-            weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_median']))
+            try:
+                weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_median'])
+                weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_median']))
+	    except:
+	        break
 
 	    if foo_date.weekday() == 0:
 
@@ -122,8 +128,11 @@ def Main():
 	    day = int(date_str[6:])
             foo_date = date(year, month, day)
 
-            weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_median'])
-            weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_median']))
+            try:
+                weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_median'])
+                weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_median']))
+	    except:
+	        break
 
 	    if foo_date.weekday() == 0:
 
@@ -161,8 +170,11 @@ def Main():
 	    day = int(date_str[6:])
             foo_date = date(year, month, day)
 
-            weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_median'])
-            weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_median']))
+            try:
+                weekly_sum += int(index['durations_and_overhead']['linux_build']['duration_median'])
+                weekly_num.append( int(index['durations_and_overhead']['linux_build']['duration_median']))
+	    except:
+	        break
 
 	    if foo_date.weekday() == 0:
 
