@@ -37,12 +37,14 @@
 
         <div id="data_set_wrapper">
 	    <div><b>SELECT DATA SET:</b></div>
+	    <div><br></div>	    
 	    <div class="data_set" id="windows_build_duration_mean" onclick="select_data_set('windows_build','duration_mean')">Windows Build Duration Mean</div>
 	    <div class="data_set" id="windows_build_duration_median" onclick="select_data_set('windows_build','duration_median')">Windows Build Duration Median</div>
 	    <div class="data_set" id="linux_build_duration_mean" onclick="select_data_set('linux_build','duration_mean')">Linux Build Duration Mean</div>
 	    <div class="data_set" id="linux_build_duration_median" onclick="select_data_set('linux_build','duration_median')">Linux Build Duration Median</div>
 	    <div class="data_set" id="windows_build_wait_time" onclick="select_data_set('windows_build','wait_time')">Windows Build Wait Time</div>
 	    <div class="data_set" id="linux_build_wait_time" onclick="select_data_set('linux_build','wait_time')">Linux Build Wait Time</div>
+	    <div><br></div>	    
 	</div>
 
         <!--<div id="build_install_wrapper">
@@ -73,11 +75,13 @@
 	</div> <!-- end calendar_wrapper -->
 
         <div id="data_display_wrapper">
-	    <div><b>CHOOSE DATA TO DISPLAY:</b></div>
+	    <div><b>SELECT DATA ELEMENTS:</b></div>
+	    <div><br></div>
 	    <div><input id="display_fremont_data" type="checkbox" checked>Fremont</div>
 	    <div><input id="display_idc_data" type="checkbox" checked>IDC</div>
 	    <div><input id="display_vc_fremont_data" type="checkbox" checked>VC_Fremont</div>
 	    <div><input id="display_vc_idc_data" type="checkbox" checked>VC_IDC</div>
+	    <div><br></div>	    
 	</div>
 
         <div id="button_wrapper">
@@ -340,16 +344,16 @@
                     var vc_idc_cb = document.getElementById("display_vc_idc_data").checked;
 
 
-                    if (fremont_cb == false ){
+                    if (fremont_cb === false ){
 		        FREMONT = [null]; 
 		    }
-		    if (idc_cb == false){
+		    if (idc_cb === false){
 		        IDC = [null];		    
 		    }
-		    if (vc_fremont_cb == false){
+		    if (vc_fremont_cb === false){
 		        VC_FREMONT = [null];		    
 		    }
-		    if (vc_idc_cb == false){
+		    if (vc_idc_cb === false){
 		        VC_IDC = [null];		    
 		    }
 
@@ -445,6 +449,8 @@
 }
 #right_box{
   float: left;
+  margin-left: 1%;
+  
 }
 #data_set_wrapper{
     border: 1px solid black;
