@@ -72,6 +72,14 @@
 	    <div><p>End Date: <input type="text" id="datepicker1" value=""></p></div> 
 	</div> <!-- end calendar_wrapper -->
 
+        <div id="data_display_wrapper">
+	    <div><b>CHOOSE DATA TO DISPLAY:</b></div>
+	    <div><input id="display_fremont_data" type="checkbox" checked>Fremont</div>
+	    <div><input id="display_idc_data" type="checkbox" checked>IDC</div>
+	    <div><input id="display_vc_fremont_data" type="checkbox" checked>VC_Fremont</div>
+	    <div><input id="display_vc_idc_data" type="checkbox" checked>VC_IDC</div>
+	</div>
+
         <div id="button_wrapper">
 	    <div><input id="graph_button" type="submit" value="Graph" onclick="update_graph()"></div>
 	</div>
@@ -257,89 +265,99 @@
                     VC_FREMONT = vc_fremont;
 		    VC_IDC = vc_idc;
 
-	var options = {};        
+	            var options = {};        
  
-        //console.log(DATE_ARR.toString());
-	var temp = [];
-        //TODO: HOT FIX...
-        var index_date = [];
-	//index_date.push([0,""])
-	for(i = 0; i < DATE_ARR.length; i++){
-	    index_date[i] = [DATE_ARR[i] ];
-	}
+                    //console.log(DATE_ARR.toString());
+	            var temp = [];
+                    //TODO: HOT FIX...
+                    var index_date = [];
+	            //index_date.push([0,""])
+	            for(i = 0; i < DATE_ARR.length; i++){
+	                index_date[i] = [DATE_ARR[i] ];
+	            }
 
-	/*if(WEEKLY_REPORT != 'weekly_'){
-	    index_date.push([i, ''+DATE_ARR[i-1] ]);
-	    index_date.push([i+1, "\t"])
-	} else {
-	    index_date.push([i, "\t"]);
-	}*/
-        console.log(i);
-	console.log(index_date);
-        console.log(FREMONT);
+	            options = {
+	                title: WEEKLY_REPORT+" "+BUILD_INSTALL+" "+MEAN_MEDIAN,
+                        highlighter: {
+                            show: false,
+                            sizeAdjust: 14,
+                            tooltipLocation: 'n',
+                            tooltipAxes: 'n',
+                            formatString:'#TRENTLabel# - %s',
+                            useAxesFormatters: false
+                        },
+	                legend: {
+	                    labels: ["Fremont", "IDC", "VC_Fremont", "VC_IDC"],
+                                show: true,
+                                rendererOptions: {
+                                fontSize: '10pt'
+                            }
+	                },
+                        seriesDefaults: {
+                            renderer: $.jqplot.FunnelRenderer
+                        },
+	                cursor: {
+                            zoom:true, 
+                            looseZoom: true, 
+                            showTooltip:false, 
+                            followMouse: true, 
+                            showTooltipOutsideZoom: false, 
+                            constrainOutsideZoom: true 
+                        },
+                        axesDefaults: {
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+                            tickOptions: {
+                                angle: -30,
+                                fontSize: '10pt'
+                            }
+                        },
+                        axes: {
+                            xaxis: {
+		                label:'Year/Month/Day',
+		                tickInterval: 1,
+                                renderer: $.jqplot.CategoryAxisRenderer,
+                                pad: 1.1,
+                                ticks: index_date
+                            },
+                            yaxis: {
+		                label:'Time (minutes)',
+		                pad: 1.2,
+		                renderer: $.jqplot.LinearAxisRenderer
+		            }
+                        },
+	                grid: {
+                            backgroundColor: '#EBEBEB',
+                            borderWidth: 0,
+                            gridLineColor: 'grey',
+                            gridLineWidth: 1,
+                            borderColor: 'black'
+                        },
+	                series: [  ]
+	            };
+                    var fremont_cb = document.getElementById("display_fremont_data").checked;
+		    var idc_cb = document.getElementById("display_idc_data").checked;
+                    var vc_fremont_cb = document.getElementById("display_vc_fremont_data").checked;
+                    var vc_idc_cb = document.getElementById("display_vc_idc_data").checked;
 
-	options = {
-	     title: WEEKLY_REPORT+" "+BUILD_INSTALL+" "+MEAN_MEDIAN,
-            highlighter: {
-                show: false,
-                sizeAdjust: 14,
-                tooltipLocation: 'n',
-                tooltipAxes: 'n',
-                formatString:'#TRENTLabel# - %s',
-                useAxesFormatters: false
-            },
-	    legend: {
-	        labels: ["Fremont", "IDC", "VC_Fremont", "VC_IDC"],
-                show: true,
-                rendererOptions: {
-                    fontSize: '10pt'
-                }
-	    },
-            seriesDefaults: {
-                renderer: $.jqplot.FunnelRenderer
-            },
-	    cursor: {
-                zoom:true, 
-                looseZoom: true, 
-                showTooltip:false, 
-                followMouse: true, 
-                showTooltipOutsideZoom: false, 
-                constrainOutsideZoom: true 
-            },
-    axesDefaults: {
-        tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
-        tickOptions: {
-          angle: -30,
-          fontSize: '10pt'
-        }
-    },
-            axes: {
-                xaxis: {
-		    label:'Year/Month/Day',
-		    tickInterval: 1,
-                    renderer: $.jqplot.CategoryAxisRenderer,
-                    pad: 1.1,
-                    ticks: index_date
-                },
-                yaxis: {
-		    label:'Time (minutes)',
-		    pad: 1.2,
-		    renderer: $.jqplot.LinearAxisRenderer
-		}
-            },
-	    grid: {
-                backgroundColor: '#EBEBEB',
-                borderWidth: 0,
-                gridLineColor: 'grey',
-                gridLineWidth: 1,
-                borderColor: 'black'
-            },
-	    series: [  ]
-	};
-                    //var plot1 = $.jqplot ('chart1', [date_fremont, date_idc, date_vc_fremont, date_vc_idc], options);
+
+                    if (fremont_cb == false ){
+		        FREMONT = [null]; 
+		    }
+		    if (idc_cb == false){
+		        IDC = [null];		    
+		    }
+		    if (vc_fremont_cb == false){
+		        VC_FREMONT = [null];		    
+		    }
+		    if (vc_idc_cb == false){
+		        VC_IDC = [null];		    
+		    }
+
+
+
                     var plot1 = $.jqplot ('chart1', [FREMONT, IDC, VC_FREMONT, VC_IDC], options);
                     plot1.replot( { resetAxes: true } );
-		}
+		}//end function(str)
 	    });
 	}
 	
@@ -451,6 +469,9 @@
 
 }
 #calendar_wrapper{
+    border: 1px solid black;
+    width: 100%;
+}#data_display_wrapper{
     border: 1px solid black;
     width: 100%;
 }
