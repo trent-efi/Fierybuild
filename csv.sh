@@ -55,3 +55,7 @@ python /var/www/html/fierybuild/weekly_windows_install_overhead_mean.py
 python /var/www/html/fierybuild/weekly_windows_install_duration_median.py
 python /var/www/html/fierybuild/weekly_windows_install_overhead_median.py
 
+python /var/www/html/fierybuild/windows_build_wait_time.py
+python /var/www/html/fierybuild/linux_build_wait_time.py
+python /var/www/html/fierybuild/weekly_windows_build_wait_time.py
+python /var/www/html/fierybuild/weekly_linux_build_wait_time.py

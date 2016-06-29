@@ -1,0 +1,24 @@
+{
+    "url": "",
+    "date_str": "",
+    "date": {"start": "", "end": ""},
+    "region": "",
+    "windows_concurrent_builds": [],
+    "linux_concurrent_builds": [],
+    "daily_stats": { 
+		     "builds": {"submitted": "", "completed": "", "submitted_and_completed_same_day": "", "failed": "", "windows_wait": "", "linux_wait": "" }, 
+		     "tests": {"submitted": "", "completed": "", "submitted_and_completed_same_day": "", "failed": "", "windows_wait": "", "linux_wait": "" } 
+		   },
+    "durations_and_overhead": {
+				  "windows_build": {"duration_mean": "", "duration_median": "", "overhead_mean": "", "overhead_median": ""},
+				  "linux_build" : {"duration_mean": "", "duration_median": "", "overhead_mean": "", "overhead_median": ""},
+				  "windows_install": {"duration_mean": "", "duration_median": "", "overhead_mean": "", "overhead_median": ""},
+				  "linux_install": {"duration_mean": "", "duration_median": "", "overhead_mean": "", "overhead_median": ""},
+				  "fiery_test": {"duration_mean": "", "duration_median": "", "overhead_mean": "", "overhead_median": ""}
+			      },
+    "builds_completed_submitted":{"builds_completed": [], "builds_submitted": [] },
+    "tests_completed_submitted":{"tests_completed": [], "tests_submitted" : [] },
+    "median_build_durations_minutes": { "windows": [], "linux": [] },
+    "mean_median_processing_lead_time_minutes": {"mean_lead_time": [], "median_lead_time": [] }
+}
+
